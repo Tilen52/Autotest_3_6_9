@@ -1,23 +1,7 @@
-import pytest
-from selenium import webdriver
+import time
 
-def pytest_addoption(parser):
-    parser.addoption('--browser_name', action='store', default='chrome',
-                     help="Choose browser: chrome or firefox")
+link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 
-
-@pytest.fixture(scope="function")
-def browser(request):
-    browser_name = request.config.getoption("browser_name")
-    browser = None
-    if browser_name == "chrome":
-        print("\nstart chrome browser for test..")
-        browser = webdriver.Chrome()
-    elif browser_name == "firefox":
-        print("\nstart firefox browser for test..")
-        browser = webdriver.Firefox()
-    else:
-        raise pytest.UsageError("--browser_name should be chrome or firefox")
-    yield browser
-    print("\nquit browser..")
-    browser.quit()
+def test_does_basket_button_exist(browser):
+    browser.get(link)
+    browser.find_element_by_css_selector('.btn-add-to-basket')
